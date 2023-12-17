@@ -51,7 +51,7 @@ function App() {
 
   return (
     <main className="container">
-      <section className="mt-12 flex justify-between items-center">
+      <section className="max-w-3xl mt-12 flex justify-between items-center mx-auto">
         <Button
           onClick={() => {
             if (week <= 1) {
@@ -71,7 +71,7 @@ function App() {
           Next
         </Button>
       </section>
-      <section>
+      <section className="max-w-3xl mx-auto">
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
