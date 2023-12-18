@@ -1,4 +1,7 @@
+using Microsoft.EntityFrameworkCore;
 using Serilog;
+using Tracker.Api.Data;
+using Tracker.Api.Handlers;
 
 var builder = WebApplication.CreateBuilder(args);
 var port = Environment.GetEnvironmentVariable("PORT") ?? "8081";
@@ -10,6 +13,12 @@ if (builder.Environment.IsProduction())
 builder.Host.UseSerilog((_, loggerOptions) => { loggerOptions.WriteTo.Console(); });
 builder.Services.AddSpaStaticFiles(options => { options.RootPath = "wwwroot"; });
 builder.Services.AddProblemDetails();
+builder.Services.AddDbContext<AppDbContext>(options =>
+{
+    var connectionString = builder.Configuration.GetConnectionString("Default");
+    options.UseNpgsql(connectionString);
+});
+builder.Services.AddHostedService<DatabaseInitializer>();
 
 var app = builder.Build();
 
@@ -48,6 +57,7 @@ app.UseSpa(options =>
 });
 
 var apiGroup = app.MapGroup("/api");
-apiGroup.MapGet("/", () => "Hello World!");
+apiGroup.MapGet("/exercises", ExerciseHandlers.GetAllAsync);
+apiGroup.MapGet("/exercises/{id}", ExerciseHandlers.GetByIdAsync);
 
 app.Run();

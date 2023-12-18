@@ -36,7 +36,7 @@ export const data: Workout[] = [
   {
     id: 5,
     exerciseName: "Bicep Curls",
-    category: "bicep",
+    category: "biceps",
     reps: 0,
     sets: 0,
     weight: 0,

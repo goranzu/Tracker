@@ -1,53 +1,10 @@
 import { useState } from "react";
 import { Button } from "./components/ui/button";
-import * as z from "zod";
-import { useForm, useFieldArray } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { data } from "./data";
 
-const formSchema = z.object({
-  exercises: z.array(
-    z.object({
-      sets: z.number(),
-      reps: z.number(),
-      weight: z.number(),
-      exerciseName: z.string(),
-    }),
-  ),
-});
-
 function App() {
   const [week, setWeek] = useState(1);
-
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      exercises: data.map((workout) => ({
-        reps: workout.reps,
-        sets: workout.sets,
-        weight: workout.weight,
-        exerciseName: workout.exerciseName,
-      })),
-    },
-  });
-
-  const { fields } = useFieldArray({
-    name: "exercises",
-    control: form.control,
-  });
-
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-  }
 
   return (
     <main className="container">
@@ -72,71 +29,46 @@ function App() {
         </Button>
       </section>
       <section className="max-w-3xl mx-auto">
-        <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-8 mt-8"
-          >
-            {fields.map((exercise, index) => {
-              return (
-                <div key={exercise.id}>
-                  <p className="text-xl">{exercise.exerciseName}</p>
-                  <div className="flex justify-between gap-4">
-                    <FormField
-                      control={form.control}
-                      name={`exercises.${index}.sets`}
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Sets</FormLabel>
-                          <FormControl>
-                            <Input
-                              {...field}
-                              onChange={(e) => {
-                                field.onChange(e);
-                                console.log(
-                                  `exercises.${index}.sets`,
-                                  e.target.value,
-                                );
-                              }}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name={`exercises.${index}.reps`}
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Sets</FormLabel>
-                          <FormControl>
-                            <Input {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name={`exercises.${index}.weight`}
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Sets</FormLabel>
-                          <FormControl>
-                            <Input {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+          }}
+        >
+          {data.map((exercise) => (
+            <div className="mt-8" key={exercise.id}>
+              <p className="text-xl underline">{exercise.exerciseName}</p>
+              <div className="flex justify-between gap-4">
+                <div className="mt-4">
+                  <label
+                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                    htmlFor={`sets-${exercise.id}`}
+                  >
+                    Sets
+                  </label>
+                  <Input type="number" />
                 </div>
-              );
-            })}
-            <Button type="submit">Submit</Button>
-          </form>
-        </Form>
+                <div className="mt-4">
+                  <label
+                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                    htmlFor={`reps-${exercise.id}`}
+                  >
+                    Reps
+                  </label>
+                  <Input type="number" />
+                </div>
+                <div className="mt-4">
+                  <label
+                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                    htmlFor={`weight-${exercise.id}`}
+                  >
+                    Weight
+                  </label>
+                  <Input type="number" />
+                </div>
+              </div>
+            </div>
+          ))}
+        </form>
       </section>
     </main>
   );
