@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using Tracker.Api.Data.Entities;
+using Tracker.Api.Data.Models;
 
 namespace Tracker.Api.Data;
 

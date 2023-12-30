@@ -1,6 +1,6 @@
 using Tracker.Api.Data.Enums;
 
-namespace Tracker.Api.Data.Entities;
+namespace Tracker.Api.Data.Models;
 
 public sealed class Exercise
 {

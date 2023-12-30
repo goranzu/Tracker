@@ -1,14 +1,12 @@
-using Tracker.Api.Data;
-using Tracker.Api.Data.Entities;
+using Tracker.Api.Contracts.Responses;
 using Tracker.Api.Data.Enums;
-using Tracker.Api.Handlers;
-using Tracker.Api.Handlers.Responses;
+using Tracker.Api.Data.Models;
 
-namespace Tracker.Api.Extensions;
+namespace Tracker.Api.Features.Exercises;
 
 public static class ExerciseExtensions
 {
-    public static ExerciseResponse MapToResponse(this Exercise exercise)
+    public static ExerciseResponse AsResponse(this Exercise exercise)
     {
         var type = exercise.ExerciseType switch
         {
