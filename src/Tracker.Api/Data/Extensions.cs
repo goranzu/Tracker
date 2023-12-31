@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Tracker.Api.Data;
 
-public static class Configuration
+public static class Extensions
 {
     public static IServiceCollection AddData(this IServiceCollection services,
         ConfigurationManager configurationManager)

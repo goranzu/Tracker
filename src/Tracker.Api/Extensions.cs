@@ -2,7 +2,7 @@ using Tracker.Api.Middleware;
 
 namespace Tracker.Api;
 
-public static class Configuration
+public static class Extensions
 {
     public static WebApplication BuildWithSpa(this WebApplicationBuilder builder)
     {

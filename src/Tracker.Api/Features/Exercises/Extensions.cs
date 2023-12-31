@@ -4,7 +4,7 @@ using Tracker.Api.Data.Models;
 
 namespace Tracker.Api.Features.Exercises;
 
-public static class ExerciseExtensions
+public static class Extensions
 {
     public static ExerciseResponse AsResponse(this Exercise exercise)
     {

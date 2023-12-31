@@ -1,4 +1,4 @@
-namespace Tracker.Api.Shared;
+namespace Tracker.Api.Shared.Abstractions;
 
 public interface ICommandHandler<in TCommand> where TCommand : class, ICommand
 {

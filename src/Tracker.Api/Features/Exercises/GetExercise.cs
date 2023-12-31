@@ -1,8 +1,10 @@
+using Microsoft.EntityFrameworkCore;
 using Tracker.Api.Data;
 using Tracker.Api.Data.Models;
 using Tracker.Api.Shared;
+using Tracker.Api.Shared.Abstractions;
 
-namespace Tracker.Api.Features.Exercises.GetExercise;
+namespace Tracker.Api.Features.Exercises;
 
 public static class GetExercise
 {
@@ -33,7 +35,8 @@ public static class GetExercise
 
         public async Task<Result<Exercise, Error>> HandleAsync(GetExerciseQuery query)
         {
-            var exercise = await _dbContext.Exercises.FindAsync([query.Id], cancellationToken: query.CancellationToken);
+            var exercise = await _dbContext.Exercises
+                .FindAsync([query.Id], cancellationToken: query.CancellationToken);
             return exercise is null ? new Error("Exercise Not Found", StatusCodes.Status404NotFound) : exercise;
         }
     }

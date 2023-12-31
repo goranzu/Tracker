@@ -1,4 +1,4 @@
-namespace Tracker.Api.Shared;
+namespace Tracker.Api.Shared.Abstractions;
 
 public interface IQueryHandler<in TQuery, TResult> where TQuery : class, IQuery<TResult>
 {

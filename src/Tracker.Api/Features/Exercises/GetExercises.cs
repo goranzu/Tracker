@@ -1,9 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using Tracker.Api.Data;
 using Tracker.Api.Data.Models;
-using Tracker.Api.Shared;
+using Tracker.Api.Shared.Abstractions;
 
-namespace Tracker.Api.Features.Exercises.GetExercises;
+namespace Tracker.Api.Features.Exercises;
 
 public static class GetExercises
 {
