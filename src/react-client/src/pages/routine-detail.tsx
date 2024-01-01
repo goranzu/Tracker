@@ -2,6 +2,12 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { RoutineDetailResponse } from "@/types/RoutineDetailResponse";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 function getRoutineById(id: number) {
   return axios
@@ -36,10 +42,18 @@ export default function RoutineDetail() {
       {routine && (
         <section className="mt-12">
           <h1 className="text-xl">{routine.name}</h1>
-          {routine.blocks.map((_, index) => (
-            <div key={index} className="mt-8">
-              <h1>Block {index + 1}</h1>
-            </div>
+          {routine.blocks.map((block) => (
+            // <div key={index} className="mt-8">
+            //   <h1>Block {index + 1}</h1>
+            // </div>
+            <Accordion key={block.id} type="single" collapsible>
+              <AccordionItem value={`block-${block.blockNumber}`}>
+                <AccordionTrigger>{block.blockNumber}</AccordionTrigger>
+                <AccordionContent>Day 1</AccordionContent>
+                <AccordionContent>Day 2</AccordionContent>
+                <AccordionContent>Day 3</AccordionContent>
+              </AccordionItem>
+            </Accordion>
           ))}
           {/* {Array.from({ length: routine.durationInBlocks }).map((_, index) => (
             <div key={index} className="mt-8">

@@ -32,6 +32,8 @@ public static class GetRoutine
             var routine = await _dbContext.Routines
                 .Where(x => x.Id == query.Id)
                 .Include(x => x.RoutineBlocks)
+                .ThenInclude(x => x.WorkoutDays)
+                .AsNoTracking()
                 .SingleOrDefaultAsync(cancellationToken: query.CancellationToken);
 
             if (routine is null)

@@ -20,6 +20,7 @@ import { Link } from "react-router-dom";
 const formSchema = z.object({
   name: z.string().min(2).max(50),
   durationInBlocks: z.coerce.number(),
+  workoutDaysPerBlock: z.coerce.number(),
 });
 
 function getRoutinesFromApi() {
@@ -39,6 +40,7 @@ export default function Home() {
     defaultValues: {
       name: "",
       durationInBlocks: 0,
+      workoutDaysPerBlock: 0,
     },
   });
 
@@ -54,6 +56,7 @@ export default function Home() {
     const requestBody: CreateRoutineRequest = {
       name: values.name,
       durationInBlocks: values.durationInBlocks,
+      workoutDaysPerBlock: values.workoutDaysPerBlock,
     };
 
     const response = await axios.post("/api/routines", requestBody);
@@ -83,28 +86,51 @@ export default function Home() {
                 </FormItem>
               )}
             />
-            <FormField
-              control={form.control}
-              name="durationInBlocks"
-              render={({ field }) => (
-                <FormItem className="mt-8">
-                  <FormLabel>Weeks/Blocks</FormLabel>
-                  <FormControl>
-                    <Input
-                      {...field}
-                      type="number"
-                      className="max-w-[100px]"
-                      required
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <Button type="submit">Create</Button>
+            <div className="flex gap-8">
+              <FormField
+                control={form.control}
+                name="durationInBlocks"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Weeks/Blocks</FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        type="number"
+                        className="max-w-[100px]"
+                        required
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="workoutDaysPerBlock"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Days per block</FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        type="number"
+                        className="max-w-[100px]"
+                        required
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <Button className="w-full sm:w-[200px]" type="submit">
+              Create
+            </Button>
           </form>
         </Form>
       </section>
+
       <section className="mt-12 max-w-xl mx-auto">
         <h2 className="text-l">Routine List</h2>
         <section className="mt-8">
